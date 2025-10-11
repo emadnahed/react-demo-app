@@ -3,19 +3,20 @@ import TodoForm from './TodoForm';
 import TodoList from './TodoList';
 
 const App = () => {
-  const [todos, setTodos] = useState([]);
-  const [filter, setFilter] = useState('all');
-
-  // Load todos from localStorage on mount
-  useEffect(() => {
-    const storedTodos = localStorage.getItem('todos');
-    if (storedTodos) {
-      setTodos(JSON.parse(storedTodos));
+  const [todos, setTodos] = useState(() => {
+    try {
+      const storedTodos = localStorage.getItem('todos');
+      return storedTodos ? JSON.parse(storedTodos) : [];
+    } catch (error) {
+      console.error('Error loading todos from localStorage:', error);
+      return [];
     }
-  }, []);
+  });
+  const [filter, setFilter] = useState('all');
 
   // Save todos to localStorage whenever todos change
   useEffect(() => {
+    console.log('Saving to localStorage:', todos);
     localStorage.setItem('todos', JSON.stringify(todos));
   }, [todos]);
 
