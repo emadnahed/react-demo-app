@@ -25,28 +25,33 @@ const TodoForm = ({ addTodo }) => {
 
   return (
     <form onSubmit={handleSubmit} className="todo-form">
+      <h2 className="form-title">Add New Todo</h2>
       <div className="input-group">
+        <label htmlFor="title" className="input-label">Title</label>
         <input
+          id="title"
           type="text"
-          placeholder="Todo title"
+          placeholder="Enter todo title..."
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          className={errors.title ? 'error' : ''}
+          className={`form-input ${errors.title ? 'error' : ''}`}
         />
         {errors.title && <span className="error-message">{errors.title}</span>}
       </div>
       <div className="input-group">
+        <label htmlFor="description" className="input-label">Description</label>
         <input
+          id="description"
           type="text"
-          placeholder="Todo description"
+          placeholder="Enter todo description..."
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          className={errors.description ? 'error' : ''}
+          className={`form-input ${errors.description ? 'error' : ''}`}
         />
         {errors.description && <span className="error-message">{errors.description}</span>}
       </div>
-      <button type="submit" disabled={!title.trim() || !description.trim()}>
-        Add Todo
+      <button type="submit" className="submit-btn" disabled={!title.trim() || !description.trim()}>
+        <span className="btn-text">Add Todo</span>
       </button>
     </form>
   );

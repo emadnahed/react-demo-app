@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import './App.css';
 import TodoForm from './TodoForm';
 import TodoList from './TodoList';
 
@@ -46,14 +47,55 @@ const App = () => {
     return true;
   });
 
+  const stats = {
+    total: todos.length,
+    completed: todos.filter(todo => todo.completed).length,
+    incomplete: todos.filter(todo => !todo.completed).length
+  };
+
   return (
     <div className="app">
-      <h1>Todo App</h1>
-      <div>
-        <button onClick={() => setFilter('all')}>All</button>
-        <button onClick={() => setFilter('completed')}>Completed</button>
-        <button onClick={() => setFilter('incomplete')}>Incomplete</button>
+      <div className="app-header">
+        <h1 className="app-title">My Todo List</h1>
+        <p className="app-subtitle">Stay organized and productive</p>
       </div>
+
+      <div className="stats-container">
+        <div className="stat-card">
+          <span className="stat-number">{stats.total}</span>
+          <span className="stat-label">Total</span>
+        </div>
+        <div className="stat-card">
+          <span className="stat-number">{stats.completed}</span>
+          <span className="stat-label">Completed</span>
+        </div>
+        <div className="stat-card">
+          <span className="stat-number">{stats.incomplete}</span>
+          <span className="stat-label">Pending</span>
+        </div>
+      </div>
+
+      <div className="filter-container">
+        <button
+          className={`filter-btn ${filter === 'all' ? 'active' : ''}`}
+          onClick={() => setFilter('all')}
+        >
+          All
+        </button>
+        <button
+          className={`filter-btn ${filter === 'completed' ? 'active' : ''}`}
+          onClick={() => setFilter('completed')}
+        >
+          Completed
+        </button>
+        <button
+          className={`filter-btn ${filter === 'incomplete' ? 'active' : ''}`}
+          onClick={() => setFilter('incomplete')}
+        >
+          Pending
+        </button>
+      </div>
+
       <TodoForm addTodo={addTodo} />
       <TodoList todos={filteredTodos} deleteTodo={deleteTodo} toggleComplete={toggleComplete} />
     </div>
