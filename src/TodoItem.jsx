@@ -2,7 +2,7 @@ import React from 'react';
 
 const TodoItem = ({ todo, deleteTodo, toggleComplete }) => {
   return (
-    <div className="todo-item">
+    <div className="todo-item fade-in">
       <input
         type="checkbox"
         checked={todo.completed}
