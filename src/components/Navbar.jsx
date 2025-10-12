@@ -43,12 +43,12 @@ const Navbar = () => {
         <ul className={isOpen ? 'nav-menu active' : 'nav-menu'}>
           <li className="nav-item">
             <a href="#home" className="nav-links" onClick={closeMobileMenu}>
-              Home
+              Dynamic Todo List
             </a>
           </li>
           <li className="nav-item">
             <a href="#about" className="nav-links" onClick={closeMobileMenu}>
-              About
+              Custom Hook
             </a>
           </li>
           <li className="nav-item">
