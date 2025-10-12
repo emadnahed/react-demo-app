@@ -53,7 +53,7 @@ const Navbar = () => {
             </Link>
           </li>
           <li className="nav-item">
-            <Link to="/cats" className="nav-links" onClick={closeMobileMenu}>
+            <Link to="/form-validation" className="nav-links" onClick={closeMobileMenu}>
               Form and its validation
             </Link>
           </li>         

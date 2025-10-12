@@ -5,6 +5,7 @@ import TodoForm from './TodoForm';
 import TodoList from './TodoList';
 import Navbar from './components/Navbar';
 import CatGallery from './components/CatGallery';
+import FormValidation from './components/FormValidation/FormValidation';
 
 const AppContent = () => {
   const [todos, setTodos] = useState(() => {
@@ -117,6 +118,10 @@ const AppContent = () => {
           <Route 
             path="/cats" 
             element={<CatGallery />} 
+          />
+          <Route 
+            path="/form-validation" 
+            element={<FormValidation />} 
           />
         </Routes>
       </main>
