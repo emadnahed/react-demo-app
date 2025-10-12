@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { FaBars, FaTimes, FaReact } from 'react-icons/fa';
 import './Navbar.css';
 
@@ -40,22 +41,22 @@ const Navbar = () => {
           {isOpen ? <FaTimes /> : <FaBars />}
         </div>
 
-        <ul className={isOpen ? 'nav-menu active' : 'nav-menu'}>
+        <ul className={`nav-menu ${isOpen ? 'active' : ''}`}>
           <li className="nav-item">
-            <a href="#home" className="nav-links" onClick={closeMobileMenu}>
-              Home
-            </a>
+            <Link to="/" className="nav-links" onClick={closeMobileMenu}>
+              Dynamic Todo List
+            </Link>
           </li>
           <li className="nav-item">
-            <a href="#about" className="nav-links" onClick={closeMobileMenu}>
-              About
-            </a>
+            <Link to="/cats" className="nav-links" onClick={closeMobileMenu}>
+              Custom Hook
+            </Link>
           </li>
           <li className="nav-item">
-            <a href="#contact" className="nav-links" onClick={closeMobileMenu}>
-              Contact
-            </a>
-          </li>
+            <Link to="/cats" className="nav-links" onClick={closeMobileMenu}>
+              Form and its validation
+            </Link>
+          </li>         
         </ul>
       </div>
     </nav>
