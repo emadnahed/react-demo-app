@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import './App.css';
 import TodoForm from './TodoForm';
 import TodoList from './TodoList';
 import Navbar from './components/Navbar';
+import CatGallery from './components/CatGallery';
 
-const App = () => {
+const AppContent = () => {
   const [todos, setTodos] = useState(() => {
     try {
       const storedTodos = localStorage.getItem('todos');
@@ -54,56 +56,78 @@ const App = () => {
     incomplete: todos.filter(todo => !todo.completed).length
   };
 
+  const location = useLocation();
+  const isHomePage = location.pathname === '/';
+
   return (
-    <>
+    <div className="app">
       <Navbar />
-      <div className="app">
-        <div className="app-header">
-          <h1 className="app-title">My Todo List</h1>
-          <p className="app-subtitle">Stay organized and productive</p>
-        </div>
+      <main className="app-content">
+        <Routes>
+          <Route 
+            path="/" 
+            element={
+              <>
+                <div className="app-header">
+                  <h1 className="app-title">My Todo List</h1>
+                  <p className="app-subtitle">Stay organized and productive</p>
+                </div>
+                
+                <div className="stats-container">
+                  <div className="stat-card">
+                    <span className="stat-number">{stats.total}</span>
+                    <span className="stat-label">Total</span>
+                  </div>
+                  <div className="stat-card">
+                    <span className="stat-number">{stats.completed}</span>
+                    <span className="stat-label">Completed</span>
+                  </div>
+                  <div className="stat-card">
+                    <span className="stat-number">{stats.incomplete}</span>
+                    <span className="stat-label">Pending</span>
+                  </div>
+                </div>
 
-        <div className="stats-container">
-          <div className="stat-card">
-            <span className="stat-number">{stats.total}</span>
-            <span className="stat-label">Total</span>
-          </div>
-          <div className="stat-card">
-            <span className="stat-number">{stats.completed}</span>
-            <span className="stat-label">Completed</span>
-          </div>
-          <div className="stat-card">
-            <span className="stat-number">{stats.incomplete}</span>
-            <span className="stat-label">Pending</span>
-          </div>
-        </div>
-
-        <div className="filter-container">
-          <button
-            className={`filter-btn ${filter === 'all' ? 'active' : ''}`}
-            onClick={() => setFilter('all')}
-          >
-            All
-          </button>
-          <button
-            className={`filter-btn ${filter === 'completed' ? 'active' : ''}`}
-            onClick={() => setFilter('completed')}
-          >
-            Completed
-          </button>
-          <button
-            className={`filter-btn ${filter === 'incomplete' ? 'active' : ''}`}
-            onClick={() => setFilter('incomplete')}
-          >
-            Pending
-          </button>
-        </div>
-
-        <TodoForm addTodo={addTodo} />
-        <TodoList todos={filteredTodos} deleteTodo={deleteTodo} toggleComplete={toggleComplete} />
-      </div>
-    </>
+                <div className="filter-container">
+                  <button
+                    className={`filter-btn ${filter === 'all' ? 'active' : ''}`}
+                    onClick={() => setFilter('all')}
+                  >
+                    All
+                  </button>
+                  <button
+                    className={`filter-btn ${filter === 'completed' ? 'active' : ''}`}
+                    onClick={() => setFilter('completed')}
+                  >
+                    Completed
+                  </button>
+                  <button
+                    className={`filter-btn ${filter === 'incomplete' ? 'active' : ''}`}
+                    onClick={() => setFilter('incomplete')}
+                  >
+                    Pending
+                  </button>
+                </div>
+                
+                <TodoForm addTodo={addTodo} />
+                <TodoList todos={filteredTodos} deleteTodo={deleteTodo} toggleComplete={toggleComplete} />
+              </>
+            } 
+          />
+          <Route 
+            path="/cats" 
+            element={<CatGallery />} 
+          />
+        </Routes>
+      </main>
+    </div>
   );
 };
+
+const App = () => (
+  <Router>
+    <AppContent />
+  </Router>
+);
 
 export default App;
