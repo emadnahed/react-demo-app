@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import './App.css';
 import TodoForm from './TodoForm';
@@ -6,6 +6,7 @@ import TodoList from './TodoList';
 import Navbar from './components/Navbar';
 import CatGallery from './components/CatGallery';
 import FormValidation from './components/FormValidation/FormValidation';
+import PerformanceOptimization from './components/PerformanceOptimization/PerformanceOptimization';
 
 const AppContent = () => {
   const [todos, setTodos] = useState(() => {
@@ -25,37 +26,49 @@ const AppContent = () => {
     localStorage.setItem('todos', JSON.stringify(todos));
   }, [todos]);
 
-  const addTodo = (title, description) => {
+  // ✅ OPTIMIZATION: useCallback to memoize callback functions
+  // Prevents TodoItem components from re-rendering unnecessarily
+  const addTodo = useCallback((title, description) => {
     const newTodo = {
       id: Date.now(),
       title,
       description,
       completed: false,
     };
-    setTodos([...todos, newTodo]);
-  };
+    setTodos(prevTodos => [...prevTodos, newTodo]);
+  }, []); // No dependencies - function never changes
 
-  const deleteTodo = (id) => {
-    setTodos(todos.filter(todo => todo.id !== id));
-  };
+  const deleteTodo = useCallback((id) => {
+    setTodos(prevTodos => prevTodos.filter(todo => todo.id !== id));
+  }, []); // No dependencies - function never changes
 
-  const toggleComplete = (id) => {
-    setTodos(todos.map(todo =>
+  const toggleComplete = useCallback((id) => {
+    setTodos(prevTodos => prevTodos.map(todo =>
       todo.id === id ? { ...todo, completed: !todo.completed } : todo
     ));
-  };
+  }, []); // No dependencies - function never changes
 
-  const filteredTodos = todos.filter(todo => {
-    if (filter === 'completed') return todo.completed;
-    if (filter === 'incomplete') return !todo.completed;
-    return true;
-  });
+  // ✅ OPTIMIZATION: useMemo to cache filtered todos
+  // Only recalculates when todos or filter changes
+  const filteredTodos = useMemo(() => {
+    console.log('📊 Filtering todos...');
+    return todos.filter(todo => {
+      if (filter === 'completed') return todo.completed;
+      if (filter === 'incomplete') return !todo.completed;
+      return true;
+    });
+  }, [todos, filter]);
 
-  const stats = {
-    total: todos.length,
-    completed: todos.filter(todo => todo.completed).length,
-    incomplete: todos.filter(todo => !todo.completed).length
-  };
+  // ✅ OPTIMIZATION: useMemo to cache stats calculation
+  // Only recalculates when todos array changes
+  const stats = useMemo(() => {
+    console.log('📈 Calculating stats...');
+    return {
+      total: todos.length,
+      completed: todos.filter(todo => todo.completed).length,
+      incomplete: todos.filter(todo => !todo.completed).length
+    };
+  }, [todos]);
 
   const location = useLocation();
   const isHomePage = location.pathname === '/';
@@ -109,9 +122,11 @@ const AppContent = () => {
                     Pending
                   </button>
                 </div>
-                
-                <TodoForm addTodo={addTodo} />
-                <TodoList todos={filteredTodos} deleteTodo={deleteTodo} toggleComplete={toggleComplete} />
+
+                <div className="content-grid">
+                  <TodoForm addTodo={addTodo} />
+                  <TodoList todos={filteredTodos} deleteTodo={deleteTodo} toggleComplete={toggleComplete} />
+                </div>
               </>
             } 
           />
@@ -119,9 +134,13 @@ const AppContent = () => {
             path="/cats" 
             element={<CatGallery />} 
           />
-          <Route 
-            path="/form-validation" 
-            element={<FormValidation />} 
+          <Route
+            path="/form-validation"
+            element={<FormValidation />}
+          />
+          <Route
+            path="/performance"
+            element={<PerformanceOptimization />}
           />
         </Routes>
       </main>

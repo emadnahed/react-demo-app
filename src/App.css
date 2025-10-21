@@ -39,31 +39,31 @@
 /* ==================== STATS CONTAINER ==================== */
 .stats-container {
   display: flex;
-  gap: 16px;
-  margin-bottom: 30px;
+  gap: 12px;
+  margin-bottom: 20px;
   animation: fadeInUp 0.6s ease-out 0.1s backwards;
 }
 
 .stat-card {
   flex: 1;
   background: white;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  padding: 12px 16px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
+  gap: 4px;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .stat-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .stat-number {
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: 700;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   -webkit-background-clip: text;
@@ -72,7 +72,7 @@
 }
 
 .stat-label {
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   color: #6b7280;
   font-weight: 500;
   text-transform: uppercase;
@@ -82,8 +82,8 @@
 /* ==================== FILTER BUTTONS ==================== */
 .filter-container {
   display: flex;
-  gap: 12px;
-  margin-bottom: 30px;
+  gap: 10px;
+  margin-bottom: 24px;
   animation: fadeInUp 0.6s ease-out 0.2s backwards;
 }
 
@@ -92,9 +92,9 @@
   background: white;
   color: #4b5563;
   border: 2px solid #e5e7eb;
-  padding: 12px 24px;
-  border-radius: 10px;
-  font-size: 1rem;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 0.875rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -132,14 +132,20 @@
   left: 0;
 }
 
+/* ==================== TWO COLUMN LAYOUT ==================== */
+.content-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  animation: fadeInUp 0.6s ease-out 0.3s backwards;
+}
+
 /* ==================== TODO FORM ==================== */
 .todo-form {
   background: white;
-  padding: 30px;
-  border-radius: 16px;
+  padding: 24px;
+  border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  margin-bottom: 30px;
-  animation: fadeInUp 0.6s ease-out 0.3s backwards;
 }
 
 .form-title {
@@ -235,10 +241,9 @@
 /* ==================== TODO LIST ==================== */
 .todo-list {
   background: white;
-  border-radius: 16px;
+  border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   padding: 24px;
-  animation: fadeInUp 0.6s ease-out 0.4s backwards;
   min-height: 200px;
 }
 
@@ -465,6 +470,13 @@
 }
 
 /* ==================== RESPONSIVE DESIGN ==================== */
+@media (max-width: 1024px) {
+  .content-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
 @media (max-width: 768px) {
   .app {
     padding: 24px 16px;
@@ -479,18 +491,28 @@
   }
 
   .stats-container {
-    flex-direction: column;
-    gap: 12px;
+    gap: 8px;
   }
 
   .stat-card {
-    flex-direction: row;
-    justify-content: space-between;
+    padding: 10px 12px;
+  }
+
+  .stat-number {
+    font-size: 1.25rem;
+  }
+
+  .stat-label {
+    font-size: 0.7rem;
   }
 
   .filter-container {
-    flex-direction: column;
     gap: 8px;
+  }
+
+  .filter-btn {
+    padding: 8px 12px;
+    font-size: 0.8rem;
   }
 
   .todo-form {

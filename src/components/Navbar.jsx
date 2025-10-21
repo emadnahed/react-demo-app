@@ -56,7 +56,12 @@ const Navbar = () => {
             <Link to="/form-validation" className="nav-links" onClick={closeMobileMenu}>
               Form and its validation
             </Link>
-          </li>         
+          </li>
+          <li className="nav-item">
+            <Link to="/performance" className="nav-links" onClick={closeMobileMenu}>
+              Performance Optimization
+            </Link>
+          </li>
         </ul>
       </div>
     </nav>

@@ -1,6 +1,8 @@
 import React from 'react';
 
 const TodoItem = ({ todo, deleteTodo, toggleComplete }) => {
+  console.log('🔄 TodoItem rendered:', todo.title);
+
   return (
     <div className={`todo-item ${todo.completed ? 'completed' : ''}`}>
       <div className="todo-checkbox-wrapper">
@@ -32,4 +34,6 @@ const TodoItem = ({ todo, deleteTodo, toggleComplete }) => {
   );
 };
 
-export default TodoItem;
+// ✅ OPTIMIZATION: Wrap with React.memo to prevent unnecessary re-renders
+// TodoItem will only re-render when its props (todo, deleteTodo, toggleComplete) change
+export default React.memo(TodoItem);
